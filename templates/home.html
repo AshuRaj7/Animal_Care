@@ -1,0 +1,79 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal_Care</title>
+    {% load static %}   
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="{% static 'script.js' %}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        function toggleNavbar() {
+            var navbar = document.getElementById('navbar');
+            navbar.classList.toggle('hidden');
+        }
+    </script>
+    <style>
+      
+        .op{
+            opacity: 0.5;
+        }
+        /* styles.css */
+        body {
+            background-image: url("{% static 'ani.jpg' %}");
+            /* Additional background properties can be added here */
+        }
+
+    </style>
+</head>
+<body class="bg-cover bg-center bg-no-repeat h-screen w-screen ;">
+          <nav class="flex items-center bg-transparent text-black justify-between flex-wrap overflow-hidden  p-4">
+        <div class="flex items-center flex-shrink-0 text-white mr-6">
+            <span class="font-semibold text-2xl text-black tracking-tight ml-2">Animal_Care</span>
+        </div>
+        <div class="block   lg:hidden">
+            <button class="flex items-center px-3 py-2 border rounded text-black border-black hover:text-blue-700 hover:border-blue-800" onclick="toggleNavbar()">
+                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 5h20v2H0V8zm0 5h20v2H0v-2z"/></svg>
+            </button>
+        </div>
+        <div class="flex ml-auto w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden text-right  lg:block" id="navbar">
+            <div class="text-sm ml-auto lg:flex-grow">
+                <a href="{% url 'home' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-800 mr-4">
+                    Home
+                </a>
+                <a href="{% url 'find' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-800 mr-4">
+                    Find Shelter
+                </a>
+                <a href="{% url 'about' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-800 mr-4">
+                    About
+                </a>
+                <a href="{% url 'donate' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-800 mr-4">
+                    Donate
+                </a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-black hover:text-red-800 mr-4">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-800 mr-4">
+                    Login/Register
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>     
+    </header>
+        <div class="welcome-container center">
+            <h1 class="welcome-text  ml-16 text-center mt-5 text-black">WELCOME</h1>
+        </div>
+    <footer class=" h-6 text-center text-white-600 bg-grau-200">  
+        <p>&copy; 2024 Animal_Care. All rights reserved.</p>   
+    </footer>
+    </div>
+</body>
+</html>

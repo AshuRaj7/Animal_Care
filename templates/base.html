@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <style>
+        #navbar {
+            text-align: right;
+        }
+    </style>
+    {% load static %}
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal_Care</title>
+    <script src="{% static 'script.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    {% endblock %}
+    <script>
+        function toggleNavbar() {
+            var navbar = document.getElementById('navbar');
+            navbar.classList.toggle('hidden');
+        }
+    </script>
+</head>
+
+<body class="flex flex-col min-h-screen  bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="flex items-center justify-between flex-wrap overflow-hidden bg-gray-800 p-4">
+        <div class="flex items-center flex-shrink-0 text-white mr-6">
+            <span class="font-semibold text-xl tracking-tight ml-2">Animal_Care</span>
+        </div>
+        <div class="block   lg:hidden">
+            <button class="flex items-center px-3 py-2 border rounded text-white border-white hover:text-gray-200 hover:border-gray-200" onclick="toggleNavbar()">
+                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 5h20v2H0V8zm0 5h20v2H0v-2z"/></svg>
+            </button>
+        </div>
+        <div class="flex ml-auto w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block" id="navbar">
+            <div class="text-sm ml-auto lg:flex-grow">
+                <a href="{% url 'home' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
+                    Home
+                </a>
+                <a href="{% url 'find' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
+                    Find Shelter
+                </a>
+                <a href="{% url 'about' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
+                    About
+                </a>
+                <a href="{% url 'donate' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
+                    Donate
+                </a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-white hover:text-red-500 mr-4">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" class="inline-block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
+                    Login/Register
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

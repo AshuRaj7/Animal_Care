@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    {% block head %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal_Care</title>
+    <style>
+        nav {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+{% endblock %}
+
+{% block content %}
+<main class="flex-grow  pt-20">
+    <section class="h-10 mb-2 ">
+        <h2 class=" text-teal-400  text-2xl text-center mt-4 pd-0   shadow-md font-semibold">Know Animal Shelters Near You</h2><br>
+    </section>
+
+    
+    <section class="">
+        <form method="post" action="#" id="shelterForm" class="flex flex-col lg:flex-row lg:items-center justify-center space-y-4 lg:space-y-0 lg:space-x-4">
+            {% csrf_token %}
+            <div class="flex flex-col lg:flex-row lg:items-center">
+                <label for="state" class="ml-4 mt-1 mr-3">State:</label>
+                <select id="state" class="px-6 py-2 border rounded bg-blue-100" onchange="populateDistricts()">
+                    <option  value="">Select State</option>
+                </select>
+            </div>
+            <div class="flex flex-col lg:flex-row lg:items-center">
+                <label for="district" class="ml-4 mr-3 mt-1">District:</label>
+                <select id="district" class="px-6 py-2 border rounded bg-blue-100" onchange="populateCities()">
+                    <option value="">Select District</option>
+                </select>
+            </div>
+            <div class="flex flex-col lg:flex-row lg:items-center">
+                <label for="city" class="ml-4 mr-3 mt-1">City:</label>
+                <select name='area' id="city" class="px-6 py-2 border rounded bg-blue-100" onchange="fetchShelterDetails()">
+                    <option value="">Select City</option>
+                </select>
+            </div>
+            <input type="submit" class="bg-blue-500 rounded-l px-4 h-10 text-white border-2 shadow-xl hover:shadow-md transition duration-300 ease-in-out hover:bg-teal-200 hover:text-black" value="Submit">
+        </form>
+        {% if data %}
+        <div class="container mx-auto mt-4">
+            {% for i in data %}
+            <div class="relative bg-pink-100 border border-gray-300 rounded-lg shadow-lg p-6 mb-6">
+                <div class="absolute top-2 right-2">
+                    <img src="{% static 'download.jpeg' %}" alt="Shelter Logo" class="w-20 h-20">
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800">{{ i.name }}</h2>
+                <p class="text-gray-600">{{ i.city }}</p>
+                <p class="text-gray-600">{{ i.address }}</p>
+                <p class="text-gray-600">{{ i.phone_number }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {%else%}
+        <div class="mt-6">
+            <h2 class="text-2xl text-center font-bold text-gray-800 mb-4">No Results Found for "{{city}}"</h2>
+        </div>
+        {%endif%}
+
+        <div class="flex justify-center mt-6">
+            {% if data.has_other_pages %}
+            <ul class="flex pagination space-x-2">
+                {% if data.has_previous %}
+                <li><a href="?city={{ city }}&page={{ data.previous_page_number }}" class="px-4 py-2 rounded bg-blue-200 hover:bg-blue-500">Previous</a></li>
+                {% endif %}
+                {% for num in data.paginator.page_range %}
+                {% if data.number == num %}
+                <li class="px-4 py-2 -mt-2 rounded bg-teal-400">{{ num }}</li>
+                {% else %}
+                <li><a href="?city={{ city }}&page={{ num }}" class="px-4 py-2 rounded bg-blue-200 hover:bg-blue-500">{{ num }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if data.has_next %}
+                <li><a href="?city={{ city }}&page={{ data.next_page_number }}" class="px-4 py-2 rounded bg-blue-200 hover:bg-blue-500">Next</a></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </section>
+</main>
+<script src="{% static 'script.js' %}"></script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Animal_Care</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+</head>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-16 lg:w-2/3 ">
+    <input type="checkbox" hidden id="flip">
+    <div class="cover">
+        <div class="front">
+            <img src="https://i.insider.com/6589dc041c5c7b8c9a0beb71?width=700" alt="">
+        </div>
+        <div class="back">
+            <img class="backImg" src="https://i.insider.com/6589dc041c5c7b8c9a0beb71?width=700" alt="">
+            
+        </div>
+    </div>
+    <div class="forms">
+        <div class="form-content">
+            <div class="login-form">
+                <div class="title">Login</div>
+                <!-- Login Form -->
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" name="username" placeholder="Enter your email" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="text"><a href="#">Forgot password?</a></div>
+                        <div class="button input-box">
+                            <input type="submit" value="Submit">
+                        </div>
+                        <div class="text sign-up-text">Don't have an account? <label for="flip">Signup now</label></div>
+                    </div>
+                </form>
+            </div>
+            <div class="signup-form">
+                <div class="title">Signup</div>
+                <!-- Signup Form -->
+                <form method="post" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="username" placeholder="Enter your username" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="button input-box">
+                            <input type="submit" value="Submit">
+                        </div>
+                        <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if messages %}
+      <ul class="messages">
+     {% for message in messages %}
+     <li class="text-red-500">{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
